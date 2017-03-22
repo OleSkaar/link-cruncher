@@ -13,12 +13,16 @@ If value is match with lang1, add lang1domain in front of string
 For each link in links array, open each link
 */
 
-var langaugeProto
+function Language(firstDirectory, domain) {
+    this.firstDirectory = firstDirectory;
+    this.domain = domain;
+}
 
-var lang1 = ['studier-og-kurs', 'studere-ved-bi', 'alumni-og-partnerskap', 'forskning', 'om-bi'];
-var lang2 = ['programmes-and-individual-courses', 'study-at-bi', 'alumni-og-partnerskap', 'research', 'about-bi'];
-var lang1domain = 'https://www.bi.no';
-var lang2domain = 'https://www.bi.edu';
+var bino = new Language(['studier-og-kurs', 'studere-ved-bi', 'alumni-og-partnerskap', 'forskning', 'om-bi'], 'https://www.bi.no');
+
+var biedu = new Language(['programmes-and-individual-courses', 'study-at-bi', 'alumni-og-partnerskap', 'research', 'about-bi'], 'https://www.bi.edu');
+
+
 var inputfield = document.getElementById('inputfield');
 var links = [];
 var re = /\"(.*?)\"/g;
@@ -30,29 +34,39 @@ function replacer() {
     setTimeout(function () {
         while ((regExed = re.exec(inputfield.value)) !== null) {
             result = regExed[1];
-                if (reLang.exec(result)[1] === lang1[0] || lang1[1] || lang1[2] || lang1[3])
-                {
-                    result = lang1domain + result;
-                } else if (reLang.exec(result)[1] === lang2[0]) {
-                    result = lang2domain + result;
-                } else { 
-                    alert(result +' does not belong to ' + lang1domain + ' or ' + lang2domain + '.');
-                }
+            
+                
+                } 
+      
+             
             links.push(result);
 
-            }
+            
         }, 4);
 }
 
 /*
-
-//Need to make an object for each language. 
 function langSearch(arr, l) {
     for (i = 0; i < l.length; i++) {
-    if (reLang.exec(arr[1] === l[i]) {
-        result = lang1domain + result;
-    }
-}
+            if (reLang.exec(arr[1] === l[i])) {
+                result = l.domain + result;
+                }
+            }
+
+// else statement for when language does not exist
+else { 
+                    alert(result +' does not belong to ' + lang1domain + ' or ' + lang2domain + '.');
+                }
+
+//If result of regex matches with first step of lang 1, add lang1domain to result, else same with lang2
+           
+           if (reLang.exec(result)[1] === lang1[0] || lang1[1] || lang1[2] || lang1[3])
+                {
+                    result = lang1domain + result;
+                } else if (reLang.exec(result)[1] === lang2[0]) {
+                    result = lang2domain + result;
+                }
+                
 */
 
 if ((regExed = re.exec(inputfield.value)) !== null) {
