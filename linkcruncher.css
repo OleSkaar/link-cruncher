@@ -1,0 +1,16 @@
+body {
+    font-family: Open Sans, sans-serif;
+}
+
+p {
+    margin: 0px;
+    padding: 5px;
+}
+
+.green {
+    background-color: darkseagreen;
+}
+
+.red {
+    background-color: darkred;
+}

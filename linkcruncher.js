@@ -47,7 +47,10 @@ function langSearch(reg, d) {
             if (reLang.exec(reg)[1] === d[i].firstDirectory[j]) {
             result = d[i].domain + reg;
             links.push(result);
-            }
+            showLinks(result, 'green');
+            } else {
+                showLinks(reLang.exec(reg)[1], 'red');
+                }
         }
     }
 }
@@ -56,6 +59,15 @@ function openLinks() {
     for (i = 0; i < links.length; i++) {
         window.open(links[i]);
     }
+}
+
+function showLinks(r, c) {
+    //Create a paragraph for each link under the results div, and give each paragraph a class
+    var para = document.createElement('p');
+    para.setAttribute('class', c);
+    var node = document.createTextNode(result);
+    para.appendChild(node);
+    document.getElementById('results').appendChild(para);
 }
 
 /*
@@ -73,5 +85,35 @@ if ((regExed = re.exec(inputfield.value)) !== null) {
 
 
 /* List for testing: 
-<li><a href="/studier-og-kurs/bachelorstudier/business-administration/">Bachelor of Business Administration</a></li><li><a href="/studier-og-kurs/bachelorstudier/creative-industries-management/"> Creative Industries Management</a></li><li><a href="/studier-og-kurs/bachelorstudier/eiendomsmegling/"> Eiendomsmegling</a></li><li><a href="/studier-og-kurs/bachelorstudier/entreprenorskap-og-okonomi/"> Entreprenørskap og økonomi</a></li><li><a href="/studier-og-kurs/bachelorstudier/finans/"> Finans</a></li><li><a href="/studier-og-kurs/bachelorstudier/internasjonal-markedsforing/"> Internasjonal markedsføring</a></li><li><a href="/studier-og-kurs/bachelorstudier/markedsforingsledelse/"> Markedsføringsledelse</a></li><li><a href="/studier-og-kurs/bachelorstudier/pr-og-markedskommunikasjon/"> PR og markedskommunikasjon</a></li><li><a href="/studier-og-kurs/bachelorstudier/regnskap-og-revisjon/"> Regnskap og revisjon</a></li><li><a href="/studier-og-kurs/bachelorstudier/retail-management/"> Retail Management</a></li><li><a href="/studier-og-kurs/bachelorstudier/sivilokonom/">Siviløkonom</a></li><li><a href="/studier-og-kurs/bachelorstudier/okonomi-og-administrasjon/"> Økonomi og administrasjon</a></li><li><a href="/studier-og-kurs/bachelorstudier/okonomi-og-forretningsjus/"> Økonomi og forretningsjus</a></li>
+-<li><a href="/studier-og-kurs/bachelorstudier/business-administration/">Bachelor of Business Administration</a></li><li><a href="/studier-og-kurs/bachelorstudier/creative-industries-management/"> Creative Industries Management</a></li><li><a href="/studier-og-kurs/bachelorstudier/eiendomsmegling/"> Eiendomsmegling</a></li><li><a href="/studier-og-kurs/bachelorstudier/entreprenorskap-og-okonomi/"> Entreprenørskap og økonomi</a></li><li><a href="/studier-og-kurs/bachelorstudier/finans/"> Finans</a></li><li><a href="/studier-og-kurs/bachelorstudier/internasjonal-markedsforing/"> Internasjonal markedsføring</a></li><li><a href="/studier-og-kurs/bachelorstudier/markedsforingsledelse/"> Markedsføringsledelse</a></li><li><a href="/studier-og-kurs/bachelorstudier/pr-og-markedskommunikasjon/"> PR og markedskommunikasjon</a></li><li><a href="/studier-og-kurs/bachelorstudier/regnskap-og-revisjon/"> Regnskap og revisjon</a></li><li><a href="/studier-og-kurs/bachelorstudier/retail-management/"> Retail Management</a></li><li><a href="/studier-og-kurs/bachelorstudier/sivilokonom/">Siviløkonom</a></li><li><a href="/studier-og-kurs/bachelorstudier/okonomi-og-administrasjon/"> Økonomi og administrasjon</a></li><li><a href="/studier-og-kurs/bachelorstudier/okonomi-og-forretningsjus/"> Økonomi og forretningsjus</a></li>
+
+        <ul class="menu-items">
+                        <li class="menu-item category">
+                            <span class="category-name">Programmes and individual courses</span>
+
+                                    <ul class="category-items">
+                                        <li class="">
+                                            <a href="/programmes-and-individual-courses/">Front page</a>
+                                        </li>
+                                            <li class="">
+                                                <a href="/programmes-and-individual-courses/bachelor-programmes/">Bachelor programmes</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/programmes-and-individual-courses/master-programmes/">Master programmes</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/programmes-and-individual-courses/executive-education/">Executive education</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/programmes-and-individual-courses/phd/">PhD</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="/programmes-and-individual-courses/corporate/">Corporate</a>
+                                            </li>
+                                            <li class="">
+                                                <a href="https://issuu.com/bi_business_school">Brochures</a>
+                                            </li>
+                                    </ul>
+
+
 */
