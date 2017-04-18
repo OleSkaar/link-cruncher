@@ -1,4 +1,4 @@
-//Link Cruncher 0.2
+//Link Cruncher 0.3
 /* A script that searches input text for URLs, checks which language the page is by scanning the first directory of the URI, returns the correct domain (default value bi.no/edu), then opens the links */
 /*
 Declare domains array
@@ -8,7 +8,25 @@ For each value in array, check if first value between / / is equal to any value 
 Add the appropriate domain
 Place each value in links array
 For each link in links array, open each link
+
+TO DO list: 
+
+add option to customize regex character
+
+
+add function to edit a domain? (add or edit domains)
+
+add function to prioritize newest domain in the domains list (z-index = domains.length?)
+
+make buttons toggle show/hide, instead of having one button for each
+
+add "how does this work?" section, explaining the different fields
+
+combine add new domains and show current domains fields (top domain field = fields to add new domain)
+
+function to toggle styles on or off? could include both button toggles and form not filled out alert
 */
+
 
 var domains = [];
 
@@ -17,19 +35,26 @@ function Domain(firstDirectory, domain) {
     this.firstDirectory = firstDirectory;
     this.domain = domain;
     domains.push(this);
+    showLinks('currentDomains', this.domain, 'domainname');
+    for (var i = 0; i < this.firstDirectory.length; i++) 
+        {
+            showLinks('currentDomains', ('/' + this.firstDirectory[i] + '/'), 'domainlist');
+        }
 }
 
 
-var bino = new Domain(['studier-og-kurs', 'studere-ved-bi', 'alumni-og-partnerskap', 'forskning', 'om-bi'], 'https://www.bi.no');
+new Domain(['studier-og-kurs', 'studere-ved-bi', 'alumni-og-partnerskap', 'forskning', 'om-bi'], 'https://www.bi.no');
 
-var biedu = new Domain(['programmes-and-individual-courses', 'study-at-bi', 'alumni-og-partnerskap', 'research', 'about-bi'], 'https://www.bi.edu');
+new Domain(['programmes-and-individual-courses', 'study-at-bi', 'alumni-og-partnerskap', 'research', 'about-bi'], 'https://www.bi.edu');
 
 
 var inputfield = document.getElementById('inputfield');
 var links = [];
 var re = /\"(.*?)\"/g;
 var reLang = /\/(.*?)\//;
-var regExed, result;
+var reLangG = /\/(.*?)\//g;
+var regExed, result, domainReg;
+var inDirectory = false;
 
 function replacer() {
     // After 4ms, search input field for links, and activate language search function
@@ -41,47 +66,91 @@ function replacer() {
 }
 
 function langSearch(reg, d) {
-    // See if links belongs to any of the specified languages, if match, add domain, and push results to links array
+    inDirectory = false;
+    // See if first directory belongs to any of the specified languages, if match, add domain, and push results to links array, if not show directory in red
     for (var i = 0; i < d.length; i++) {
         for (var j = 0; j < d[i].firstDirectory.length; j++) {
-            if (reLang.exec(reg)[1] === d[i].firstDirectory[j]) {
+            if (reLang.exec(reg) !== null && reLang.exec(reg)[1] === d[i].firstDirectory[j]) {
             result = d[i].domain + reg;
             links.push(result);
-            showLinks(result, 'green');
-            } else {
-                showLinks(reLang.exec(reg)[1], 'red');
-                }
+            showLinks('results', result, 'green');
+            inDirectory = true;
+            } 
         }
     }
+    if (inDirectory === false) {
+        showLinks('results', reg, 'red');
+        }
 }
 
 function openLinks() {
+    //Open every link in the links array (triggers pop-up blocker in Chrome)
     for (i = 0; i < links.length; i++) {
         window.open(links[i]);
     }
 }
 
-function showLinks(r, c) {
-    //Create a paragraph for each link under the results div, and give each paragraph a class
+function showLinks(id, r, c) {
+    // Create a paragraph element, fill with text content, and each paragraph a class
     var para = document.createElement('p');
     para.setAttribute('class', c);
-    var node = document.createTextNode(result);
+    var node = document.createTextNode(r);
     para.appendChild(node);
-    document.getElementById('results').appendChild(para);
+    document.getElementById(id).appendChild(para);
 }
 
-/*
-// else statement for when language does not exist
-else { 
-                    alert(result +' does not belong to ' + lang1domain + ' or ' + lang2domain + '.');
-                }
-                
-*/
+function showHide(i, d) {
+    document.getElementById(i).style.display = d;
+}
 
-if ((regExed = re.exec(inputfield.value)) !== null) {
-    alert('No links found!');
-    }
+function newDomain(d, t) {
+    //If domain fields are not empty, create new Domain object, push all directories to directories array, clear fields and reset color to default. If one or more fields are empty, make that field light red and display message
+    var dval = document.getElementById(d).value;
+    var tval = document.getElementById(t).value;
+    if (dval !== "" && tval !== "")   
+    {
+    var n = new Domain([], tval);
+    while ((domainReg = reLangG.exec(dval)) !== null) {
+        n.firstDirectory.push(domainReg[1]);
+        showLinks('currentDomains', ('/' + domainReg[1] + '/'), 'domainlist');
+    }  
+        clearField(d);
+        clearField(t);
+        rcls(d, 'lightRed');
+        rcls(t, 'lightRed');
+        showHide ('fieldMissing', 'none');
+    } else
+        showHide ('fieldMissing', 'block');
+        { 
+            if (dval === "") {
+                cls (d, 'lightRed');
+            } else {
+                rcls (d, 'lightRed');
+            }
+            if (tval === "") {
+                cls (t, 'lightRed');
+            } else {
+                rcls (t, 'lightRed');
+            }
+        }
+}
 
+function clearField(f) {
+    document.getElementById(f).value = null;
+}
+
+function cls (id, c) {
+    document.getElementById(id).setAttribute('class', c);
+}
+
+function rcls (id, c) {
+    document.getElementById(id).removeAttribute('class', c);
+}
+
+function changeReg() {
+    var regTemp = document.getElementById(regExChar).value 
+    re = /\"(.regTemp?)\"/g;
+}
 
 
 /* List for testing: 

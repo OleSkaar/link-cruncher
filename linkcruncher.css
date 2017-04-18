@@ -14,3 +14,16 @@ p {
 .red {
     background-color: darkred;
 }
+
+.lightRed {
+    background-color: bisque;
+}
+
+.domainname {
+    background-color: cadetblue;
+}
+
+.redText {
+    color: crimson;
+    font-size: 0.8em;
+}

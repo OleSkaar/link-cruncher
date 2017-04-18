@@ -7,11 +7,48 @@
     </head>
 
     <body>
+        <section class="left">
+        <h1>Link Cruncher</h1>
+        
         <form>
+            <p>Paste text here:</p>
             <input id="inputfield" type="text" onpaste="replacer()" autofocus>
         
         </form>
-        <button onclick="openLinks()">Hello</button>
+        
+        <form>
+            <p>The link cruncher recognizes anything between two of the following character as a link:</p>
+            <input id="regExChar" value="">
+            <button onclick="changeReg()">Change</button>
+        </form>
+            
+        <button onclick="openLinks()">Open links</button>
+
+            </section>
+        <button onclick="showHide('newDomainFields', 'block')">Add new domain</button>
+        <button onclick="showHide('currentDomains', 'block')">Show current domains</button>
+        
+        
+        <section id="newDomainFields" style="display: none;">
+        <form>
+            <h3>Top level domain</h3>  
+            <p>Include http/https, www and the last slash. Example: https://www.bi.no/</p>
+            <input id="domainTLD">
+            <h3>Domain first directories</h3>
+            <p>Enter all first directories of the domain, separated by commas (including slashes). Example: to enter bi.no/studier-og-kurs/ and bi.no/studere-ved-bi/, enter "/studier-og-kurs/, /studere-ved-bi/".</p>
+            <input id=domainDirectories>
+        </form>
+            <div id=submitButton>
+            <p id="fieldMissing" class="redText" style="display: none;">Please fill out the forms marked in <span class="lightRed">light red</span>.</p>
+            <button onclick="newDomain('domainDirectories', 'domainTLD')">Submit new domain</button>
+            </div>
+            <button onclick="showHide('newDomainFields', 'none')">Hide fields</button> 
+            </section>
+        <section id="currentDomains" style="display: none;">
+        <h3>Current domains</h3>
+            
+            <button onclick="showHide('currentDomains', 'none')">Hide domains</button>
+        </section>
         <div id="results"></div>
         
     </body>
