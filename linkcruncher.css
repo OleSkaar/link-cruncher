@@ -1,0 +1,29 @@
+body {
+    font-family: Open Sans, sans-serif;
+}
+
+p {
+    margin: 0px;
+    padding: 5px;
+}
+
+.green {
+    background-color: darkseagreen;
+}
+
+.red {
+    background-color: darkred;
+}
+
+.lightRed {
+    background-color: bisque;
+}
+
+.domainname {
+    background-color: cadetblue;
+}
+
+.redText {
+    color: crimson;
+    font-size: 0.8em;
+}
